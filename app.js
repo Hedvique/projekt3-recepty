@@ -20,6 +20,7 @@ recept-hodnoceni, recept-nazev, recept-popis.
 
 let poleReceptu = document.getElementById('recepty');
 
+generovaniReceptu()
 
 function vytvorRecept(i) {
     let recept = document.createElement('div');
@@ -37,9 +38,16 @@ function vytvorRecept(i) {
     let receptNazev = document.createElement('h3');
     receptNazev.textContent = recepty[i].nadpis;
 
-    seznamReceptu.appendChild(recept);
+    poleReceptu.appendChild(recept);
     recept.appendChild(receptObrazek);
     receptObrazek.appendChild(foto);
     recept.appendChild(receptInfo);
     receptInfo.appendChild(receptNazev);
 }
+
+function generovaniReceptu(){
+    for(i = 0; i < recepty.length; i++) {
+        vytvorRecept(i);
+    }
+}
+
