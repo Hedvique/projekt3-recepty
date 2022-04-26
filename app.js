@@ -51,3 +51,17 @@ function generovaniReceptu(){
     }
 }
 
+// vyhledávání
+let vyhledavani = document.getElementById('hledat');
+
+hledat.addEventListener("input", (e) => {
+    let zadanyText = e.target.value.toLowerCase();
+    poleReceptu.innerHTML = '';
+
+    for (let i = 0; i < recepty.length; i++) {
+        if(recepty[i].nadpis.toLowerCase().includes(zadanyText)) {
+            vytvorRecept(i);
+        }
+    }
+})
+
