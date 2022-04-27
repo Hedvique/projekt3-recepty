@@ -45,8 +45,8 @@ function vytvorRecept(i) {
     receptInfo.appendChild(receptNazev);
 }
 
-function generovaniReceptu(){
-    for(i = 0; i < recepty.length; i++) {
+function generovaniReceptu() {
+    for (i = 0; i < recepty.length; i++) {
         vytvorRecept(i);
     }
 }
@@ -59,9 +59,46 @@ hledat.addEventListener("input", (e) => {
     poleReceptu.innerHTML = '';
 
     for (let i = 0; i < recepty.length; i++) {
-        if(recepty[i].nadpis.toLowerCase().includes(zadanyText)) {
+        if (recepty[i].nadpis.toLowerCase().includes(zadanyText)) {
             vytvorRecept(i);
         }
     }
 })
 
+//filtrování podle kategorie jídla
+let filterKategorie = document.getElementById('kategorie');
+
+filterKategorie.addEventListener("input", (e) => {
+    let vybranaKategorie = e.target.value;
+    poleReceptu.innerHTML = '';
+
+    for (let i = 0; i < recepty.length; i++) {
+        if (recepty[i].kategorie.includes(vybranaKategorie)) {
+            vytvorRecept(i);
+        }
+    }
+})
+
+//filtrování podle hodnocení
+let filterHodnoceni = document.getElementById('razeni');
+
+filterHodnoceni.addEventListener('input', (e) => {
+    let vybraneHodnoceni = e.target.value;
+    poleReceptu.innerHTML = '';
+    
+    if (vybraneHodnoceni == 1) {
+        recepty.sort(function(a, b) {
+            return b.hodnoceni - a.hodnoceni;
+        })
+        generovaniReceptu();
+    }
+    if  (vybraneHodnoceni == 2) {
+        recepty.sort(function(a, b) {
+            return a.hodnoceni - b.hodnoceni;
+        })
+        generovaniReceptu();
+    }
+        if (vybraneHodnoceni == "") {
+        generovaniReceptu();
+    }
+})
