@@ -18,6 +18,7 @@ recept-hodnoceni, recept-nazev, recept-popis.
 6) Poslední vybraný recept ulož do Local Storage, aby se při novém otevření aplikace načetl.
 */
 
+
 let poleReceptu = document.getElementById('recepty');
 
 generovaniReceptu()
@@ -43,6 +44,10 @@ function vytvorRecept(i) {
     receptObrazek.appendChild(foto);
     recept.appendChild(receptInfo);
     receptInfo.appendChild(receptNazev);
+
+    recept.addEventListener('click', () => {
+        zobrazDetailReceptu(i);
+    })
 }
 
 function generovaniReceptu() {
@@ -85,20 +90,29 @@ let filterHodnoceni = document.getElementById('razeni');
 filterHodnoceni.addEventListener('input', (e) => {
     let vybraneHodnoceni = e.target.value;
     poleReceptu.innerHTML = '';
-    
+
     if (vybraneHodnoceni == 1) {
-        recepty.sort(function(a, b) {
+        recepty.sort(function (a, b) {
             return b.hodnoceni - a.hodnoceni;
         })
         generovaniReceptu();
     }
-    if  (vybraneHodnoceni == 2) {
-        recepty.sort(function(a, b) {
+    if (vybraneHodnoceni == 2) {
+        recepty.sort(function (a, b) {
             return a.hodnoceni - b.hodnoceni;
         })
         generovaniReceptu();
     }
-        if (vybraneHodnoceni == "") {
+    if (vybraneHodnoceni == "") {
         generovaniReceptu();
     }
 })
+
+function zobrazDetailReceptu(i) {
+    document.getElementById('recept-foto').src = recepty[i].img;
+    document.getElementById('recept-foto').alt = 'Foto receptu';
+    document.getElementById('recept-kategorie').innerHTML = recepty[i].kategorie;
+    document.getElementById('recept-hodnoceni').innerHTML = recepty[i].hodnoceni;
+    document.getElementById('recept-nazev').innerHTML = recepty[i].nadpis;
+    document.getElementById('recept-popis').innerHTML = recepty[i].popis;
+};
