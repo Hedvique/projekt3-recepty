@@ -22,6 +22,7 @@ recept-hodnoceni, recept-nazev, recept-popis.
 let poleReceptu = document.getElementById('recepty');
 
 generovaniReceptu()
+zobrazPoslednyRecept();
 
 function vytvorRecept(i) {
     let recept = document.createElement('div');
@@ -47,6 +48,7 @@ function vytvorRecept(i) {
 
     recept.addEventListener('click', () => {
         zobrazDetailReceptu(i);
+        uloženiPoslednihoReceptu(i)
     })
 }
 
@@ -108,6 +110,7 @@ filterHodnoceni.addEventListener('input', (e) => {
     }
 })
 
+//zobrazení detailu receptu
 function zobrazDetailReceptu(i) {
     document.getElementById('recept-foto').src = recepty[i].img;
     document.getElementById('recept-foto').alt = 'Foto receptu';
@@ -115,4 +118,21 @@ function zobrazDetailReceptu(i) {
     document.getElementById('recept-hodnoceni').innerHTML = recepty[i].hodnoceni;
     document.getElementById('recept-nazev').innerHTML = recepty[i].nadpis;
     document.getElementById('recept-popis').innerHTML = recepty[i].popis;
+};
+
+//local storage
+function uloženiPoslednihoReceptu(i) {
+    let vybranyRecept = recepty[i];
+    localStorage.vybranyRecept = JSON.stringify(vybranyRecept);
+};
+
+function zobrazPoslednyRecept(i) {
+    let poslednyRecept = localStorage.vybranyRecept;
+
+    if (!(poslednyRecept === null || poslednyRecept === undefined)) {
+        vybranyRecept = JSON.parse(poslednyRecept);
+    }
+    
+    recepty[i] = vybranyRecept;
+    zobrazDetailReceptu(i);
 };
